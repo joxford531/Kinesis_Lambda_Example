@@ -27,6 +27,18 @@ board.on("ready", () => {
   console.log("Board ready");
   boardReady = true;
   let button = new five.Button({pin: "GPIO4", holdTime: 300});
+  let led = new five.Led.RGB({
+    pins: {
+      red: "GPIO5",
+      green: "GPIO6",
+      blue: "GPIO13"
+    },
+    isAnode: true
+  });
+
+  led.on();
+  led.color("crimson");
+  led.intensity(50);
   
   button.on("up", () => {
     flatDataState = !flatDataState;
