@@ -1,0 +1,25 @@
+{
+  "name": "unit",
+  "version": "1.0.0",
+  "description": "read arduino sensors through serial",
+  "main": "server.js",
+  "dependencies": {
+    "aws-sdk": "^2.48.0",
+    "gulp": "^3.9.1",
+    "gulp-sourcemaps": "^2.6.0",
+    "gulp-typescript": "^3.1.6",
+    "johnny-five": "^0.10.10",
+    "moment": "^2.18.1",
+    "serialport": "^4.0.7",
+    "typescript": "^2.2.2"
+  },
+  "devDependencies": {
+    "@types/moment": "^2.13.0",
+    "@types/node": "^7.0.14"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

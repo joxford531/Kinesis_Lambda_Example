@@ -1,0 +1,62 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+*.stackdump
+.DS_Store
+
+# Connection
+config.json
+
+*.sublime-workspace
+
+# Runtime data
+pids
+*.pid
+*.seed
+devdb.json
+schedulerConfiguration.json
+
+# Dependency directory
+node_modules
+bower_components
+
+# Public (html/css/client-side js)
+public/**/*
+
+# TypeScript output
+server/**/*.js
+server/**/*.js.map
+unit/**/*.js
+unit/**/*.js.map
+
+# Deployment
+deployment/**/*
+server/streamProcessors/*/model
+server/streamProcessors/*/repository
+*.zip
+
+# Docker
+dockerBuild
+schedulerBuild
+
+# Node Tools Analysis
+.vs
+.vscode
+.ntvs_analysis.dat
+
+# Build output
+obj/
+bin/
+
+# AWS
+snsConfig.json
+
+# Email
+mailconfig.auth.json
+test/angular/controllers/Controllers.js.map
+test/server/frontend/Models.js
+test/server/frontend/Models.js.map
+
+# WebStorm
+.idea/*
