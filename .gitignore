@@ -24,6 +24,9 @@ bower_components
 # Public (html/css/client-side js)
 public/**/*
 
+# Don't ignore gulpfiles
+!gulpfile.js
+
 # TypeScript output
 server/**/*.js
 server/**/*.js.map

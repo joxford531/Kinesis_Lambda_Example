@@ -30,20 +30,12 @@ void loop(void) {
     Serial.println(temp + String(",") + String(dhtTemp) + String(",") + humidity + String(",") + String(analogRead(photocellPin)));
     delay(750);  
   } else {
-    switch(bGlobalErr) {
-      case 1:
-        Serial.println("Error 1: DHT start condition 1 not met.");
-        break;
-      case 2:
-        Serial.println("Error 2: DHT start condition 2 not met.");
-        break;
-      case 3:
-        Serial.println("Error 3: DHT checksum error.");
-        break;
-      default:
-        Serial.println("Error: Unrecognized code encountered.");
-        break;
-    } 
+    sensors.requestTemperatures();
+    char temp[6];
+    dtostrf(sensors.getTempFByIndex(0), 4, 2, temp);
+    String str(temp);
+    Serial.println(temp + String(",") + String("#") + String(",") + "#" + String(",") + String(analogRead(photocellPin)));
+    delay(750); 
   }
 }
 

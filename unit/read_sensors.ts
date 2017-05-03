@@ -104,7 +104,7 @@ board.on("ready", () => {
             StreamName: config.kinesisStreamName
           }, (err, data) => {
             if(!err) {
-              console.log("send record: " + JSON.stringify(recordsToSend));
+              console.log("sent records: " + JSON.stringify(recordsToSend));
             } else {
               console.error("error: ", err);
             }
@@ -153,7 +153,7 @@ board.on("ready", () => {
             StreamName: config.kinesisStreamName
           }, (err, data) => {
             if(!err) {
-              console.log("send record: " + JSON.stringify(recordsToSend));
+              console.log("sent record: " + JSON.stringify(recordsToSend));
             } else {
               console.error("error: ", err);
             }
