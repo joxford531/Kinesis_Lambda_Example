@@ -73,7 +73,7 @@ export class DatabaseModel {
           autoIncrement: true,
           primaryKey: true
         },
-        Name: {
+        Code: {
           type: sequelize.STRING,
           allowNull: false
         },
@@ -147,8 +147,7 @@ export class DatabaseModel {
         },
         SentTime: {
           type: sequelize.DATE,
-          allowNull: false,
-          primaryKey: true
+          allowNull: false
         },
         VariableId: {
           type: sequelize.INTEGER,

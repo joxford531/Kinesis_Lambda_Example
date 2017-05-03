@@ -8,7 +8,7 @@ const config = require("./config.json");
 const db = new DatabaseModel(config);
 
 interface KinesisEvent {
-  Records: { kinesis: { data: string } }[];
+  Records: { kinesis: { data: string }}[];
 }
 
 interface IncomingVariable {
@@ -35,19 +35,24 @@ export class VariableProcessor {
 
   public static async handler(event: KinesisEvent, context: AWSLambda.Context, callback: AWSLambda.Callback) {
     if(!!event && !!event.Records && event.Records.length > 0) {
-      const records: IncomingVariable[] = [];
+      let records: IncomingVariable[] = [];
       const groupedRecords: GroupedVariable[] = [];
 
       // Kinesis records are in base64 format, we need to convert them to parseable strings
       event.Records.forEach(record => {
-        const decodedStr = new Buffer(record.kinesis.data, "base64").toString("utf8");
-        const recordToProcess: {} = JSON.parse(decodedStr);
+        try {
+          const decodedStr = new Buffer(record.kinesis.data, "base64").toString("utf-8");
+          const recordToProcess: {} = JSON.parse(decodedStr);
 
-        if(recordToProcess.hasOwnProperty("Data")){
-          groupedRecords.push(recordToProcess as GroupedVariable);
-        } else {
-          records.push(recordToProcess as IncomingVariable);
-        }        
+          if(recordToProcess.hasOwnProperty("Data")){
+            groupedRecords.push(recordToProcess as GroupedVariable);
+          } else {
+            records.push(recordToProcess as IncomingVariable);
+          }
+        } catch(err) {
+          console.error("Error During Parsing", err);
+          callback(new Error("Error During Processing"), null);
+        }
       });
 
       if(groupedRecords.length > 0) {
@@ -63,15 +68,24 @@ export class VariableProcessor {
             });
           });
         });
-        records.concat(groupedRecordsToConcat);
+        records = records.concat(groupedRecordsToConcat);
       }
 
-      await VariableProcessor.performLookups(records);
-      await VariableProcessor.processRecords(records);
+      console.log(records);
 
-      callback(null, `Successfully processed ${event.Records.length} records.`);
+      try {
+        await VariableProcessor.performLookups(records);
+        await VariableProcessor.processRecords(records);
+
+        console.log(`Successfully processed ${event.Records.length} records.`);
+        callback(null, `Successfully processed ${event.Records.length} records.`);
+      } catch(err) {
+        console.error("Error During Processing", err);
+        callback(new Error("Error During Processing"), null);
+      }      
     } else {
       // fail the Lambda invocation if there are no records
+      console.error("Kinesis data did not contain any records");
       callback(new Error("Kinesis data did not contain any records"), null);
     }
   }
@@ -161,7 +175,7 @@ export class VariableProcessor {
 
     // insert/update records in DB    
     requests.push(
-      db.VariableData.bulkCreate(recordsToCreate)
+      db.VariableData.bulkCreate(recordsToCreate,  { updateOnDuplicate: ["SentTime", "ProcessedTime", "Value"] })
     );
 
     requests.push(
@@ -171,3 +185,4 @@ export class VariableProcessor {
     return Promise.all(requests);
   }
 }
+exports.handler = VariableProcessor.handler;

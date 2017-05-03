@@ -3,7 +3,7 @@ import {Unit} from "./Unit";
 
 export interface Variable {
   Id?: number;
-  Name: string;
+  Code: string;
   Description: string;
   Type?: VariableType;
   TypeId: number;  

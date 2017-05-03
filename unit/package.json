@@ -10,7 +10,7 @@
     "gulp-typescript": "^3.1.6",
     "johnny-five": "^0.10.10",
     "moment": "^2.18.1",
-    "serialport": "^4.0.7",
+    "serialport": "5.0.0-beta3",
     "typescript": "^2.2.2"
   },
   "devDependencies": {
