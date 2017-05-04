@@ -24,9 +24,6 @@ bower_components
 # Public (html/css/client-side js)
 public/**/*
 
-# Don't ignore gulpfiles
-!gulpfile.js
-
 # TypeScript output
 server/**/*.js
 server/**/*.js.map
@@ -63,3 +60,7 @@ test/server/frontend/Models.js.map
 
 # WebStorm
 .idea/*
+
+# Don't ignore gulpfiles
+!server/gulpfile.js
+!unit/gulpfile.js
